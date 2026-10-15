@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        include:
+          - os: windows-latest
+            python: '3.10'
+          - os: windows-latest
+            python: '3.14'
+          - os: macos-latest
+            python: '3.12'
+          - os: macos-latest
+            python: '3.14'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install .
+      - run: python -m unittest discover -s tests -v
+      - run: python -I tools/smoke_install.py
+
+  package:
+    name: Lint and package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install build ruff twine
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - run: python -m pip install --force-reinstall --no-deps dist/*.whl
+      - run: python -I tools/smoke_install.py
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: python-distributions
+          path: dist/*
+          if-no-files-found: error

@@ -1,0 +1,7 @@
+- id: zip-preflight
+  name: Check ZIP portability
+  description: Inspect ZIP metadata for filename portability and extraction hazards.
+  entry: zip-preflight
+  language: python
+  files: '\.zip$'
+  types: [file]

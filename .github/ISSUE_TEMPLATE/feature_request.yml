@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest a focused improvement with a concrete use case.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and use case
+      description: What archive-sharing or release workflow would this improve?
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Proposed behavior and references
+      description: Include examples, expected output, and primary sources if available.
+    validations:
+      required: true

@@ -1,0 +1,25 @@
+name: Bug report
+description: Report a reproducible scanner, CLI, or packaging problem.
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Tool version, Python version, OS, and extractor/filesystem if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Provide a small synthetic ZIP-building script or sanitized entry names. Do not upload private data.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+      description: Include the rule code and relevant output after reviewing paths for private information.
+    validations:
+      required: true
