@@ -1,0 +1,11 @@
+{
+  "format": "text",
+  "fail_on": "warning",
+  "max_entries": 100000,
+  "max_total_size": 10737418240,
+  "max_member_size": 2147483648,
+  "max_ratio": 1000,
+  "ignore_rules": [],
+  "summary": true,
+  "max_findings": 5
+}

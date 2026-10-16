@@ -66,9 +66,41 @@ class ScannerTests(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertIn("WINDOWS_DEVICE", self.codes([name]))
 
+    def test_console_device_names_in_any_component(self):
+        for name in (
+            "CONIN$",
+            "CONOUT$",
+            "conin$.txt",
+            "CoNoUt$.log",
+            "a/CONIN$",
+            "CONOUT$/file.txt",
+            "a\\conout$.txt",
+        ):
+            with self.subTest(name=name):
+                self.archive([name])
+                report = scan_archive(self.path)
+                self.assertIn("WINDOWS_DEVICE", {f.code for f in report.findings})
+                finding = next(f for f in report.findings if f.code == "WINDOWS_DEVICE")
+                self.assertEqual("error", finding.severity)
+                self.assertEqual(name, finding.member)
+                self.assertTrue(report.fails("error"))
+
     def test_similar_non_device_names(self):
         self.assertNotIn(
-            "WINDOWS_DEVICE", self.codes(["CONSOLE", "COM10.txt", "LPT0", "auxiliary"])
+            "WINDOWS_DEVICE",
+            self.codes(
+                [
+                    "CONSOLE",
+                    "COM10.txt",
+                    "LPT0",
+                    "auxiliary",
+                    "CONINPUT$",
+                    "CONOUT",
+                    "CONOUT$$",
+                    "XCONIN$",
+                    "CONIN$extra",
+                ]
+            ),
         )
 
     def test_windows_invalid_characters_and_streams(self):
@@ -80,6 +112,18 @@ class ScannerTests(unittest.TestCase):
         for name in ("file.", "dir /file", "file ", "dir./file"):
             with self.subTest(name=name):
                 self.assertIn("TRAILING_DOT_SPACE", self.codes([name]))
+
+    def test_repeated_trailing_separators_are_non_canonical(self):
+        for name in ("dir//", "dir///", "outer/dir//", "dir\\\\", "dir/\\", "dir\\/"):
+            with self.subTest(name=name):
+                self.archive([name])
+                report = scan_archive(self.path)
+                self.assertIn("NON_CANONICAL_PATH", {f.code for f in report.findings})
+                finding = next(f for f in report.findings if f.code == "NON_CANONICAL_PATH")
+                self.assertEqual("warning", finding.severity)
+                self.assertTrue(report.fails())
+                self.assertFalse(report.fails("error"))
+                self.assertTrue(report.scan_complete)
 
     def test_case_collision(self):
         self.assertIn("PATH_COLLISION", self.codes(["Readme.md", "README.md"]))

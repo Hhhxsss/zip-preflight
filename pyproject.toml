@@ -36,6 +36,9 @@ Documentation = "https://github.com/Hhhxsss/zip-preflight/tree/main/docs"
 [project.scripts]
 zip-preflight = "zip_preflight.cli:main"
 
+[project.gui-scripts]
+zip-preflight-gui = "zip_preflight.desktop:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

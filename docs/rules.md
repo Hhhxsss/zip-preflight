@@ -14,7 +14,7 @@ Archive-level rules have no member or entry index.
 | `PARENT_PATH` | A literal `..` component using either slash style | Remove parent references |
 | `CONTROL_CHARACTER` | ASCII control (0–31) or DEL in a name; original NUL retained | Rename without control characters |
 | `WINDOWS_CHARACTER` | `< > : " \| ? *` in a component; includes alternate data stream syntax | Rename for Windows compatibility |
-| `WINDOWS_DEVICE` | `CON`, `PRN`, `AUX`, `NUL`, `COM1`–`COM9`, `LPT1`–`LPT9`, or superscript ¹/²/³ forms, optionally with extensions | Rename the component |
+| `WINDOWS_DEVICE` | `CON`, `CONIN$`, `CONOUT$`, `PRN`, `AUX`, `NUL`, `COM1`–`COM9`, `LPT1`–`LPT9`, or superscript ¹/²/³ forms, optionally with extensions | Rename the component |
 | `TRAILING_DOT_SPACE` | Component ends in a dot or ASCII space | Remove the trailing characters |
 | `DUPLICATE_ENTRY` | Same original entry name appears twice | Rebuild the ZIP without duplicate entries |
 | `PATH_COLLISION` | A component aliases under the portability model | Use one spelling throughout the bundle |
@@ -31,7 +31,7 @@ Archive-level rules have no member or entry index.
 | Code | Meaning |
 | --- | --- |
 | `BACKSLASH_PATH` | Backslashes can be separators or literal characters depending on extractor |
-| `NON_CANONICAL_PATH` | Empty or `.` component can be interpreted differently |
+| `NON_CANONICAL_PATH` | Empty or `.` component can be interpreted differently, including repeated trailing separators such as `dir//` |
 | `BIDI_CONTROL` | Bidirectional marks, embeddings, overrides, or isolates can disguise a name |
 | `LONG_COMPONENT` | Component exceeds 255 UTF-8 bytes or 255 UTF-16 code units |
 | `LONG_PATH` | Relative path already reaches 260 UTF-16 code units |
@@ -43,6 +43,10 @@ Long-path checks do **not** include the destination directory length and cannot
 predict all OS/API limits. Stored/Deflate is a compatibility baseline; other methods
 can be valid ZIP and still trigger a warning. High ratios are often legitimate for
 repetitive datasets; this is a heuristic, not a ZIP-bomb verdict.
+
+One trailing separator denotes a directory and does not by itself trigger
+`NON_CANONICAL_PATH`. Windows device names are checked case-insensitively in every
+component; see [Python's reserved-path reference](https://docs.python.org/3.14/library/os.path.html#os.path.isreserved).
 
 ## Portability model
 

@@ -11,8 +11,39 @@ from dataclasses import dataclass, field
 
 from .models import Finding, Limits, Report, Severity
 
+RULE_CODES = frozenset(
+    {
+        "EMPTY_PATH",
+        "ABSOLUTE_PATH",
+        "PARENT_PATH",
+        "BACKSLASH_PATH",
+        "NON_CANONICAL_PATH",
+        "CONTROL_CHARACTER",
+        "BIDI_CONTROL",
+        "WINDOWS_CHARACTER",
+        "WINDOWS_DEVICE",
+        "TRAILING_DOT_SPACE",
+        "LONG_COMPONENT",
+        "LONG_PATH",
+        "SYMLINK",
+        "SPECIAL_FILE",
+        "ENCRYPTED_MEMBER",
+        "COMPRESSION_METHOD",
+        "MEMBER_SIZE_LIMIT",
+        "COMPRESSION_RATIO",
+        "DUPLICATE_ENTRY",
+        "PATH_COLLISION",
+        "FILE_DIRECTORY_CONFLICT",
+        "TARGET_COLLISION",
+        "ENTRY_COUNT_LIMIT",
+        "TOTAL_SIZE_LIMIT",
+    }
+)
+
 _DRIVE = re.compile(r"^[A-Za-z]:")
-_RESERVED = re.compile(r"^(CON|PRN|AUX|NUL|COM[1-9¹²³]|LPT[1-9¹²³])$", re.IGNORECASE)
+_RESERVED = re.compile(
+    r"^(CON|CONIN\$|CONOUT\$|PRN|AUX|NUL|COM[1-9¹²³]|LPT[1-9¹²³])$", re.IGNORECASE
+)
 _WINDOWS_INVALID = frozenset('<>:"|?*')
 _BIDI = frozenset("\u061c\u200e\u200f\u202a\u202b\u202c\u202d\u202e\u2066\u2067\u2068\u2069")
 
@@ -31,7 +62,8 @@ def _check_member(info: zipfile.ZipInfo, index: int, report: Report, limits: Lim
         report.findings.append(Finding(code, severity, message, name, entry_index=index))
 
     path = name.replace("\\", "/")
-    parts = path.rstrip("/").split("/")
+    # Allow one directory terminator while retaining repeated empty components.
+    parts = path.removesuffix("/").split("/")
     if not name or not path.strip("/"):
         add("EMPTY_PATH", "error", "Entry has no relative filename.")
     if path.startswith("/") or _DRIVE.match(path):

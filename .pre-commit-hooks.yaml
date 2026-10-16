@@ -3,5 +3,5 @@
   description: Inspect ZIP metadata for filename portability and extraction hazards.
   entry: zip-preflight
   language: python
-  files: '\.zip$'
+  files: '(?i)\.zip$'
   types: [file]

@@ -42,7 +42,32 @@ def main() -> None:
         )
         assert unsafe.returncode == 1 and "PARENT_PATH" in unsafe.stdout
         assert sorted(item.name for item in Path(folder).iterdir()) == ["bundle.zip"]
-    print(f"Installed zip-preflight {__version__}: API, module CLI, JSON, and metadata verified.")
+        config = Path(folder) / ".zip-preflight.json"
+        config.write_text(
+            json.dumps({"format": "json", "summary": True, "max_findings": 0}),
+            encoding="utf-8",
+        )
+        configured = subprocess.run(
+            [sys.executable, "-I", "-m", "zip_preflight", str(path)],
+            cwd=folder,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        data = json.loads(configured.stdout)
+        assert configured.returncode == 1
+        assert data["summary"]["total_findings"] == 1
+        assert data["summary"]["failed_archives"] == 1
+        assert data["summary"]["checked_entries"] == 1
+        assert len(data["archives"][0]["findings"]) == 1
+        assert sorted(item.name for item in Path(folder).iterdir()) == [
+            ".zip-preflight.json",
+            "bundle.zip",
+        ]
+    print(
+        f"Installed zip-preflight {__version__}: API, CLI, JSON, configuration, "
+        "summaries, and metadata verified."
+    )
 
 
 if __name__ == "__main__":

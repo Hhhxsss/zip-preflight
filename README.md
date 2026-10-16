@@ -9,6 +9,13 @@ Check release bundles, exported datasets, and upload archives for names that fai
 Windows, overwrite each other on case-insensitive filesystems, or contain obvious
 extraction hazards. Reads ZIP metadata only. Never extracts, rewrites, or uploads files.
 
+The optional [Windows desktop app](docs/windows-desktop.md) adds a single-ZIP
+right-click menu, a native result window, and complete JSON/text report exports.
+Its standalone Windows build includes Python and Tk.
+To uninstall the portable app, remove its menu through **右键菜单…** or
+`zip-preflight.exe --uninstall-context-menu`, then close the app and delete the EXE.
+See [menu removal and uninstall steps](docs/windows-desktop.md#remove-the-menu-and-uninstall).
+
 [中文文档](README.zh-CN.md) · [Rule reference](docs/rules.md) · [Usage and CI](docs/usage.md) · [Research and scope](docs/research.md)
 
 ```text
@@ -46,11 +53,20 @@ zip-preflight release.zip
 zip-preflight "dist/*.zip" --format json
 zip-preflight dataset.zip --fail-on error
 zip-preflight dataset.zip --max-total-size 21474836480 --max-ratio 2000
+zip-preflight "dist/*.zip" --summary --max-findings 5
+zip-preflight release.zip --config examples/zip-preflight.json
 ```
 
 Quoted globs are expanded by the tool on every OS. Unmatched patterns are errors.
 Warnings fail the check by default; `--fail-on error` keeps warnings visible without
 failing on them. Size options use integer **bytes**; thresholds are configurable.
+
+Save repeated options in a `.zip-preflight.json` file in the working directory;
+explicit command-line options override it. Use `--no-config` to skip that file.
+The [example configuration](examples/zip-preflight.json) lists supported settings.
+`--summary` groups findings by rule and shows up to five examples per archive;
+`--max-findings 0` shows counts only. JSON reports always retain all findings.
+See [configuration and summaries](docs/usage.md#configuration-files) for details.
 
 | Exit | Meaning |
 | --- | --- |

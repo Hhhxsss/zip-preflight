@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Collection
 from dataclasses import asdict, dataclass, field
 from typing import Literal
 
@@ -53,11 +54,13 @@ class Report:
     findings: list[Finding] = field(default_factory=list)
     error: str | None = None
 
-    def fails(self, fail_on: Severity = "warning") -> bool:
+    def fails(self, fail_on: Severity = "warning", *, ignore_rules: Collection[str] = ()) -> bool:
         if fail_on not in ("warning", "error"):
             raise ValueError("fail_on must be 'warning' or 'error'")
         return bool(self.error) or any(
-            finding.severity == "error" or fail_on == "warning" for finding in self.findings
+            finding.code not in ignore_rules
+            and (finding.severity == "error" or fail_on == "warning")
+            for finding in self.findings
         )
 
     def to_dict(self) -> dict:
