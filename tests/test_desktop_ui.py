@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+import sys
 import tempfile
 import threading
 import time
@@ -16,6 +18,14 @@ from zip_preflight.models import Finding, Report
 class DesktopWindowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if (
+            sys.platform == "darwin"
+            and sys.version_info[:2] == (3, 12)
+            and os.environ.get("GITHUB_ACTIONS") == "true"
+        ):
+            # This hosted runner hangs in tk.Tk() before any test starts.
+            # macOS 3.14 and Windows still exercise the real window tests.
+            raise unittest.SkipTest("Tk initialization hangs on the macOS Python 3.12 CI runner")
         try:
             import tkinter as tk
         except ImportError as error:
