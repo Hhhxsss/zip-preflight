@@ -8,6 +8,9 @@
 
 Windows 桌面入口支持 **右键检查单个 ZIP、结果窗口和保存报告**。
 构建后的独立程序无需另外安装 Python，详见 [桌面使用说明](docs/windows-desktop.md)。
+`v0.1.0` 发布早于桌面功能，Release 中尚无 EXE。现在可从最新 `main` 分支
+安装 Python 图形界面，或按[构建说明](docs/windows-desktop.md#build-a-standalone-windows-executable)
+自行生成 EXE。
 
 [English](README.md) · [规则说明](docs/rules.md) · [完整用法](docs/usage.md) · [项目调研](docs/research.md)
 

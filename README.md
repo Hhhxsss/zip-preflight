@@ -12,6 +12,9 @@ extraction hazards. Reads ZIP metadata only. Never extracts, rewrites, or upload
 The optional [Windows desktop app](docs/windows-desktop.md) adds a single-ZIP
 right-click menu, a native result window, and complete JSON/text report exports.
 Its standalone Windows build includes Python and Tk.
+The v0.1.0 release predates the desktop app and does not include an EXE. To use
+this feature now, install the current `main` branch for the Python GUI or build
+the EXE from source; see the [desktop guide](docs/windows-desktop.md#start-the-app).
 To uninstall the portable app, remove its menu through **右键菜单…** or
 `zip-preflight.exe --uninstall-context-menu`, then close the app and delete the EXE.
 See [menu removal and uninstall steps](docs/windows-desktop.md#remove-the-menu-and-uninstall).
