@@ -10,6 +10,7 @@ import zipfile
 from pathlib import Path
 
 from zip_preflight.cli import main
+from zip_preflight.scanner import RULE_CODES
 
 
 class CliTests(unittest.TestCase):
@@ -45,6 +46,13 @@ class CliTests(unittest.TestCase):
         self.assertEqual(0, code)
         self.assertIn("PASS", text)
         self.assertIn("Payloads were not inspected", text)
+
+    def test_list_rules_needs_no_archive(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output), self.assertRaises(SystemExit) as exit_status:
+            main(["--list-rules"])
+        self.assertEqual(0, exit_status.exception.code)
+        self.assertEqual(sorted(RULE_CODES), output.getvalue().splitlines())
 
     def test_error_finding_exit(self):
         code, text = self.run_cli(self.archive(member="../escape"))

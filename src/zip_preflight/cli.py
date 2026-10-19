@@ -15,7 +15,13 @@ from . import __version__
 from .config import Settings, load_settings
 from .models import Report, Severity
 from .reporting import build_json_report, report_exit_code, summarize
-from .scanner import scan_archive
+from .scanner import RULE_CODES, scan_archive
+
+
+class _ListRulesAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        print("\n".join(sorted(RULE_CODES)))
+        parser.exit(0)
 
 
 def _positive_int(value: str) -> int:
@@ -57,6 +63,12 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("archives", nargs="+", help="ZIP paths or quoted glob patterns")
     parser.add_argument("--version", action="version", version=f"zip-preflight {__version__}")
+    parser.add_argument(
+        "--list-rules",
+        nargs=0,
+        action=_ListRulesAction,
+        help="List rule codes accepted by --ignore-rule and exit",
+    )
     config = parser.add_mutually_exclusive_group()
     config.add_argument("--config", metavar="PATH", help="Read a JSON configuration file")
     config.add_argument(

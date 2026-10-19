@@ -100,6 +100,7 @@ Rule exceptions affect pass/fail policy only: ignored findings remain in the
 report and are marked `IGNORED` in text output. Repeated `--ignore-rule CODE` options
 replace the configured list; `--no-ignore-rules` clears it. Exceptions do not
 disable checks or change scan limits, and unreadable inputs still exit `2`.
+Run `zip-preflight --list-rules` to print the accepted rule codes without an archive.
 
 Files must contain a UTF-8 JSON object (a UTF-8 BOM is accepted). Unknown keys,
 unknown rule codes, duplicate keys, non-finite numbers, and invalid values are
