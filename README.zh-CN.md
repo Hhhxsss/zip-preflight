@@ -8,9 +8,8 @@
 
 Windows 桌面入口支持 **右键检查单个 ZIP、结果窗口和保存报告**。
 构建后的独立程序无需另外安装 Python，详见 [桌面使用说明](docs/windows-desktop.md)。
-`v0.1.0` 发布早于桌面功能，Release 中尚无 EXE。现在可从最新 `main` 分支
-安装 Python 图形界面，或按[构建说明](docs/windows-desktop.md#build-a-standalone-windows-executable)
-自行生成 EXE。
+[v0.2.0 发布页](https://github.com/Hhhxsss/zip-preflight/releases/tag/v0.2.0)
+提供 Windows x64 独立 EXE，安装步骤见[桌面使用说明](docs/windows-desktop.md#start-the-app)。
 
 [English](README.md) · [规则说明](docs/rules.md) · [完整用法](docs/usage.md) · [项目调研](docs/research.md)
 
@@ -19,7 +18,7 @@ Windows 桌面入口支持 **右键检查单个 ZIP、结果窗口和保存报�
 从 GitHub 的版本标签安装，需要本机已安装 Git：
 
 ```console
-python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.1.0"
+python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.2.0"
 ```
 
 也可以克隆后安装：
@@ -110,7 +109,7 @@ zip-preflight release.zip --config examples/zip-preflight.json
 
 ```yaml
 - name: Install zip-preflight
-  run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.1.0"
+  run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.2.0"
 - name: Check release archives
   run: python -m zip_preflight "dist/*.zip"
 ```

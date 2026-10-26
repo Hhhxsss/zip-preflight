@@ -237,7 +237,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.1.0"
+      - run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.2.0"
       - run: python -m zip_preflight "bundles/*.zip"
 ```
 
@@ -249,7 +249,7 @@ reviewed commit SHAs. The project's own CI pins actions to immutable commits.
 ```yaml
 repos:
   - repo: https://github.com/Hhhxsss/zip-preflight
-    rev: v0.1.0
+    rev: v0.2.0
     hooks:
       - id: zip-preflight
 ```

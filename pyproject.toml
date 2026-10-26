@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zip-preflight"
-version = "0.1.0"
+version = "0.2.0"
 description = "Check ZIP archives for filename portability and extraction hazards without extracting them."
 readme = "README.md"
 requires-python = ">=3.10"

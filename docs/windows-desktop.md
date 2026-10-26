@@ -6,7 +6,9 @@ schema as the CLI. Member payloads are never extracted or opened.
 
 ## Start the app
 
-Run the standalone `zip-preflight.exe` from the desktop build. No Python
+Download `zip-preflight.exe` from the
+[v0.2.0 release](https://github.com/Hhhxsss/zip-preflight/releases/tag/v0.2.0),
+or build it from source. The release executable targets Windows x64. No Python
 installation is needed on the machine running that executable. Keep the file in
 a stable location before enabling its right-click menu.
 

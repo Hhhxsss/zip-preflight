@@ -12,9 +12,9 @@ extraction hazards. Reads ZIP metadata only. Never extracts, rewrites, or upload
 The optional [Windows desktop app](docs/windows-desktop.md) adds a single-ZIP
 right-click menu, a native result window, and complete JSON/text report exports.
 Its standalone Windows build includes Python and Tk.
-The v0.1.0 release predates the desktop app and does not include an EXE. To use
-this feature now, install the current `main` branch for the Python GUI or build
-the EXE from source; see the [desktop guide](docs/windows-desktop.md#start-the-app).
+The [v0.2.0 release](https://github.com/Hhhxsss/zip-preflight/releases/tag/v0.2.0)
+includes a standalone Windows x64 EXE. See the
+[desktop guide](docs/windows-desktop.md#start-the-app) for setup.
 To uninstall the portable app, remove its menu through **右键菜单…** or
 `zip-preflight.exe --uninstall-context-menu`, then close the app and delete the EXE.
 See [menu removal and uninstall steps](docs/windows-desktop.md#remove-the-menu-and-uninstall).
@@ -35,7 +35,7 @@ Python **3.10+**, with **no runtime dependencies**. Works on Windows, macOS, and
 Install the tagged release from GitHub (Git is required):
 
 ```console
-python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.1.0"
+python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.2.0"
 ```
 
 Or clone and install locally:
@@ -97,7 +97,7 @@ After your build has created ZIP artifacts, add:
 
 ```yaml
 - name: Install zip-preflight
-  run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.1.0"
+  run: python -m pip install "git+https://github.com/Hhhxsss/zip-preflight.git@v0.2.0"
 - name: Check release archives
   run: python -m zip_preflight "dist/*.zip"
 ```

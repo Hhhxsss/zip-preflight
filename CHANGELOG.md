@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.0 — 2026-10-26
+
 - Add a native desktop result window with background checks, readable issue
   explanations, paging, copy, and complete atomic JSON/text report exports.
 - Add opt-in current-user Windows ZIP cascading menus with install/remove support
@@ -18,6 +20,7 @@
 - Include uppercase and mixed-case ZIP extensions in the pre-commit hook.
 - Warn about repeated trailing path separators while accepting ordinary directory
   entries with a single trailing separator.
+- Add `--list-rules` to discover valid rule codes without opening an archive.
 
 ## 0.1.0 — 2026-10-15
 
