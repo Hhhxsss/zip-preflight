@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Show the running version in the desktop window title.
+
 ## 0.2.0 — 2026-10-26
 
 - Add a native desktop result window with background checks, readable issue

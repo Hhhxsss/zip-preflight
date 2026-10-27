@@ -7,6 +7,7 @@ import sys
 import threading
 from pathlib import Path
 
+from . import __version__
 from .config import Settings
 from .desktop import (
     RULE_HELP,
@@ -37,7 +38,7 @@ class ResultWindow:
         self.closed = False
         self.page = 0
         self.events: queue.Queue = queue.Queue()
-        root.title("zip-preflight · ZIP 检查")
+        root.title(f"zip-preflight {__version__} · ZIP 检查")
         root.geometry("1040x760")
         root.minsize(850, 620)
         root.configure(background="#f3f5f7")
