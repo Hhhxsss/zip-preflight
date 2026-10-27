@@ -98,6 +98,15 @@ class ConfigTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "Invalid config"):
                     load_settings({})
 
+    def test_unknown_names_escape_terminal_controls(self):
+        for value in ({"\x1b[31m": 1}, {"ignore_rules": ["\x1b[31m"]}):
+            with self.subTest(value=value):
+                self.path.write_text(json.dumps(value), encoding="utf-8")
+                with self.assertRaises(ValueError) as raised:
+                    load_settings({})
+                self.assertNotIn("\x1b", str(raised.exception))
+                self.assertIn("\\x1b", str(raised.exception))
+
     def test_invalid_json_duplicate_keys_and_nonfinite_numbers_are_errors(self):
         for text in (
             "{",

@@ -44,7 +44,9 @@ class Settings:
             raise ValueError("ignore_rules must be an array of rule codes")
         unknown = set(self.ignore_rules) - RULE_CODES
         if unknown:
-            raise ValueError(f"unknown rule codes: {', '.join(sorted(unknown))}")
+            raise ValueError(
+                f"unknown rule codes: {', '.join(ascii(code) for code in sorted(unknown))}"
+            )
         object.__setattr__(self, "ignore_rules", tuple(dict.fromkeys(self.ignore_rules)))
         try:
             _ = self.limits
@@ -87,7 +89,9 @@ def load_settings(
                     raise ValueError("configuration must be a JSON object")
                 unknown = data.keys() - {item.name for item in fields(Settings)}
                 if unknown:
-                    raise ValueError(f"unknown settings: {', '.join(sorted(unknown))}")
+                    raise ValueError(
+                        f"unknown settings: {', '.join(ascii(key) for key in sorted(unknown))}"
+                    )
                 if "max_findings" in data and "summary" not in data:
                     data["summary"] = True
                 # Validate the file even when a CLI option will override a bad value.
