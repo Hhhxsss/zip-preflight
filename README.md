@@ -67,6 +67,8 @@ failing on them. Size options use integer **bytes**; thresholds are configurable
 Save repeated options in a `.zip-preflight.json` file in the working directory;
 explicit command-line options override it. Use `--no-config` to skip that file.
 The [example configuration](examples/zip-preflight.json) lists supported settings.
+Run `zip-preflight --list-rules` to see valid rule codes without a ZIP file before
+adding them to `ignore_rules` or using `--ignore-rule CODE`.
 `--summary` groups findings by rule and shows up to five examples per archive;
 `--max-findings 0` shows counts only. JSON reports always retain all findings.
 See [configuration and summaries](docs/usage.md#configuration-files) for details.

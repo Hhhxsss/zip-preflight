@@ -4,6 +4,7 @@
 
 - Show the running version in the desktop window title.
 - Escape control characters in unknown configuration keys and rule codes reported as errors.
+- Document rule-code discovery in both quick-start guides.
 
 ## 0.2.0 — 2026-10-26
 

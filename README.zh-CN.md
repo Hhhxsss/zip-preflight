@@ -88,6 +88,7 @@ zip-preflight release.zip --config examples/zip-preflight.json
 `--max-findings 0` 仅展示统计，`--no-summary` 恢复完整文本明细。
 汇总不减少扫描条目，JSON 始终保留全部发现的问题。
 `ignore_rules` 中的规则仍会被检查并显示，只是不参与通过或失败的判定。
+添加规则例外前，可运行 `zip-preflight --list-rules` 查看有效规则代码，无需提供 ZIP 文件。
 完整优先级、字段和 JSON 汇总结构见 [使用指南](docs/usage.md#configuration-files)。
 
 ## 检查范围
