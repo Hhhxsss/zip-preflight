@@ -156,6 +156,8 @@ def _text_report(
             f"  {report.checked_entries}/{report.entry_count} entries checked; "
             f"{report.declared_uncompressed_bytes} declared uncompressed bytes"
         )
+        if not report.scan_complete:
+            lines.append("  Scan incomplete: entry limit prevented checking all members.")
         if summary:
             lines.extend(_summary_lines(summarize([report], fail_on, ignore_rules=ignore_rules)))
         visible = report.findings[:max_findings] if summary else report.findings

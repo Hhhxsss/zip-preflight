@@ -303,6 +303,12 @@ class CliTests(unittest.TestCase):
         with zipfile.ZipFile(path, "w") as archive:
             archive.writestr("a", "")
             archive.writestr("b", "")
+        code, text = self.run_cli(
+            "--summary", "--max-findings", "0", "--max-entries", "1", str(path)
+        )
+        self.assertEqual(1, code)
+        self.assertIn("Scan incomplete: entry limit prevented checking all members.", text)
+        self.assertIn("1/2 entries checked", text)
         code, text = self.run_cli("--summary", "--format", "json", "--max-entries", "1", str(path))
         data = json.loads(text)
         self.assertEqual(1, code)
