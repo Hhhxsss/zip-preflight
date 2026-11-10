@@ -45,7 +45,8 @@ class Settings:
         unknown = set(self.ignore_rules) - RULE_CODES
         if unknown:
             raise ValueError(
-                f"unknown rule codes: {', '.join(ascii(code) for code in sorted(unknown))}"
+                f"unknown rule codes: {', '.join(ascii(code) for code in sorted(unknown))}; "
+                "run zip-preflight --list-rules to see valid codes"
             )
         object.__setattr__(self, "ignore_rules", tuple(dict.fromkeys(self.ignore_rules)))
         try:

@@ -6,6 +6,7 @@
 - Escape control characters in unknown configuration keys and rule codes reported as errors.
 - Document rule-code discovery in both quick-start guides.
 - Mark incomplete scans explicitly in text output, including count-only summaries.
+- Point unknown rule-code errors to `--list-rules` for valid values.
 
 ## 0.2.0 — 2026-10-26
 

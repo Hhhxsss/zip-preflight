@@ -107,6 +107,12 @@ class ConfigTests(unittest.TestCase):
                 self.assertNotIn("\x1b", str(raised.exception))
                 self.assertIn("\\x1b", str(raised.exception))
 
+    def test_unknown_rule_codes_suggest_list_rules(self):
+        self.path.write_text('{"ignore_rules": ["TYPO"]}', encoding="utf-8")
+        with self.assertRaises(ValueError) as raised:
+            load_settings({})
+        self.assertIn("zip-preflight --list-rules", str(raised.exception))
+
     def test_invalid_json_duplicate_keys_and_nonfinite_numbers_are_errors(self):
         for text in (
             "{",

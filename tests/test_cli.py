@@ -342,6 +342,13 @@ class CliTests(unittest.TestCase):
                     main(args)
                 self.assertEqual(2, raised.exception.code)
 
+    def test_unknown_rule_code_points_to_list_rules(self):
+        output = io.StringIO()
+        with contextlib.redirect_stderr(output), self.assertRaises(SystemExit) as raised:
+            main(["--ignore-rule", "TYPO", "a.zip"])
+        self.assertEqual(2, raised.exception.code)
+        self.assertIn("zip-preflight --list-rules", output.getvalue())
+
     def test_version_needs_no_archive(self):
         with contextlib.redirect_stdout(io.StringIO()) as output:
             with self.assertRaises(SystemExit) as raised:
