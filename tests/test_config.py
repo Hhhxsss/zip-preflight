@@ -113,6 +113,12 @@ class ConfigTests(unittest.TestCase):
             load_settings({})
         self.assertIn("zip-preflight --list-rules", str(raised.exception))
 
+    def test_misspelled_setting_suggests_known_name(self):
+        self.path.write_text('{"max_entry": 10}', encoding="utf-8")
+        with self.assertRaises(ValueError) as raised:
+            load_settings({})
+        self.assertIn("did you mean 'max_entries'?", str(raised.exception))
+
     def test_invalid_json_duplicate_keys_and_nonfinite_numbers_are_errors(self):
         for text in (
             "{",

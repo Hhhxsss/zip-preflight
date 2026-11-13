@@ -7,6 +7,7 @@
 - Document rule-code discovery in both quick-start guides.
 - Mark incomplete scans explicitly in text output, including count-only summaries.
 - Point unknown rule-code errors to `--list-rules` for valid values.
+- Suggest a matching configuration key when a single setting name is misspelled.
 
 ## 0.2.0 — 2026-10-26
 

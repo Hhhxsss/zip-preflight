@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import asdict, dataclass, fields
+from difflib import get_close_matches
 from pathlib import Path
 
 from .models import Limits, Severity
@@ -88,11 +89,19 @@ def load_settings(
                 )
                 if not isinstance(data, dict):
                     raise ValueError("configuration must be a JSON object")
-                unknown = data.keys() - {item.name for item in fields(Settings)}
+                valid_names = {item.name for item in fields(Settings)}
+                unknown = data.keys() - valid_names
                 if unknown:
-                    raise ValueError(
+                    message = (
                         f"unknown settings: {', '.join(ascii(key) for key in sorted(unknown))}"
                     )
+                    if len(unknown) == 1:
+                        match = get_close_matches(
+                            next(iter(unknown)), sorted(valid_names), n=1, cutoff=0.8
+                        )
+                        if match:
+                            message += f"; did you mean {ascii(match[0])}?"
+                    raise ValueError(message)
                 if "max_findings" in data and "summary" not in data:
                     data["summary"] = True
                 # Validate the file even when a CLI option will override a bad value.
