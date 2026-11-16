@@ -92,16 +92,15 @@ def load_settings(
                 valid_names = {item.name for item in fields(Settings)}
                 unknown = data.keys() - valid_names
                 if unknown:
-                    message = (
-                        f"unknown settings: {', '.join(ascii(key) for key in sorted(unknown))}"
-                    )
-                    if len(unknown) == 1:
-                        match = get_close_matches(
-                            next(iter(unknown)), sorted(valid_names), n=1, cutoff=0.8
-                        )
+                    candidates = sorted(valid_names)
+                    names = []
+                    for key in sorted(unknown):
+                        name = ascii(key)
+                        match = get_close_matches(key, candidates, n=1, cutoff=0.8)
                         if match:
-                            message += f"; did you mean {ascii(match[0])}?"
-                    raise ValueError(message)
+                            name += f" (did you mean {ascii(match[0])}?)"
+                        names.append(name)
+                    raise ValueError(f"unknown settings: {', '.join(names)}")
                 if "max_findings" in data and "summary" not in data:
                     data["summary"] = True
                 # Validate the file even when a CLI option will override a bad value.
