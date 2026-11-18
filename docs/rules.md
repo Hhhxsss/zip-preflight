@@ -36,7 +36,7 @@ Archive-level rules have no member or entry index.
 | `LONG_COMPONENT` | Component exceeds 255 UTF-8 bytes or 255 UTF-16 code units |
 | `LONG_PATH` | Relative path already reaches 260 UTF-16 code units |
 | `ENCRYPTED_MEMBER` | General-purpose ZIP encryption flag is set |
-| `COMPRESSION_METHOD` | Method is outside Stored (0) and Deflate (8) |
+| `COMPRESSION_METHOD` | Reports the method number when it is outside Stored (0) and Deflate (8) |
 | `COMPRESSION_RATIO` | Declared uncompressed/compressed ratio exceeds policy, or nonempty declared data has zero compressed bytes |
 
 Long-path checks do **not** include the destination directory length and cannot

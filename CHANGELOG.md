@@ -8,6 +8,7 @@
 - Mark incomplete scans explicitly in text output, including count-only summaries.
 - Point unknown rule-code errors to `--list-rules` for valid values.
 - Suggest matching configuration keys for misspelled setting names.
+- Include the numeric ZIP method in unsupported-compression findings.
 
 ## 0.2.0 — 2026-10-26
 

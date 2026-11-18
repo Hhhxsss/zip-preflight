@@ -119,7 +119,8 @@ def _check_member(info: zipfile.ZipInfo, index: int, report: Report, limits: Lim
         add(
             "COMPRESSION_METHOD",
             "warning",
-            "Compression method is outside Stored/Deflate compatibility.",
+            f"Compression method {info.compress_type} is outside "
+            "Stored (0)/Deflate (8) compatibility.",
         )
     if info.file_size > limits.max_member_size:
         add("MEMBER_SIZE_LIMIT", "error", f"Declared size exceeds {limits.max_member_size} bytes.")
