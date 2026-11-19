@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import tempfile
 from collections.abc import Sequence
@@ -117,6 +118,10 @@ def finding_details(finding: Finding, settings: Settings) -> str:
     title, reason, advice = RULE_HELP.get(
         finding.code, (finding.code, finding.message, "检查该条目后重新打包。")
     )
+    if finding.code == "COMPRESSION_METHOD":
+        match = re.match(r"Compression method (\d+) is outside", finding.message)
+        if match:
+            reason = f"ZIP 压缩方法编号为 {match[1]}，不是通用的 Stored 或 Deflate。"
     severity = "错误" if finding.severity == "error" else "警告"
     if finding.code in settings.ignore_rules:
         severity += "（已忽略，不影响本次通过判定）"

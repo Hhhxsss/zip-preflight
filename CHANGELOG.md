@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Show the unsupported ZIP compression method number in desktop finding details.
+
 ## 0.2.1 — 2026-11-19
 
 - Show the running version in the desktop window title.
