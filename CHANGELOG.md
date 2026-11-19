@@ -1,14 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.2.1 — 2026-11-19
 
 - Show the running version in the desktop window title.
 - Escape control characters in unknown configuration keys and rule codes reported as errors.
-- Document rule-code discovery in both quick-start guides.
-- Mark incomplete scans explicitly in text output, including count-only summaries.
-- Point unknown rule-code errors to `--list-rules` for valid values.
-- Suggest matching configuration keys for misspelled setting names.
+- Make incomplete scans explicit in text reports, including count-only summaries.
+- Point unknown rule-code errors to `--list-rules`; suggest matching configuration keys for typos.
 - Include the numeric ZIP method in unsupported-compression findings.
+- Document rule-code discovery in both quick-start guides.
 
 ## 0.2.0 — 2026-10-26
 

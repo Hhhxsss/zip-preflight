@@ -354,7 +354,7 @@ class CliTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as raised:
                 main(["--version"])
         self.assertEqual(0, raised.exception.code)
-        self.assertIn("zip-preflight 0.2.0", output.getvalue())
+        self.assertIn("zip-preflight 0.2.1", output.getvalue())
 
 
 if __name__ == "__main__":
